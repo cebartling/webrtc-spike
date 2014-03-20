@@ -41,3 +41,7 @@
 
 # other
 *.iws
+
+/grails/webrtc-spike/.idea/
+
+/webrtc-spike-javascript-client/.idea/
