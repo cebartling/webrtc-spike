@@ -22,7 +22,8 @@ module.exports = function (grunt) {
     // configurable paths
     var yeomanConfig = {
         app: 'app',
-        dist: 'dist'
+        dist: 'dist',
+        grails_dist: '../grails/webrtc-spike/web-app'
     };
 
     grunt.initConfig({
@@ -133,12 +134,12 @@ module.exports = function (grunt) {
             ]
         },
         jasmine: {
-            all:{
-                src : '/scripts/{,*/}*.js',
+            all: {
+                src: '/scripts/{,*/}*.js',
                 options: {
                     keepRunner: true,
-                    specs : 'test/spec/**/*.js',
-                    vendor : [
+                    specs: 'test/spec/**/*.js',
+                    vendor: [
                         '<%= yeoman.app %>/bower_components/jquery/jquery.js',
                         '<%= yeoman.app %>/bower_components/underscore/underscore.js',
                         '<%= yeoman.app %>/bower_components/backbone/backbone.js',
@@ -149,24 +150,28 @@ module.exports = function (grunt) {
         },
         coffee: {
             dist: {
-                files: [{
-                    // rather than compiling multiple files here you should
-                    // require them into your main .coffee file
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/scripts',
-                    src: '{,*/}*.coffee',
-                    dest: '.tmp/scripts',
-                    ext: '.js'
-                }]
+                files: [
+                    {
+                        // rather than compiling multiple files here you should
+                        // require them into your main .coffee file
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/scripts',
+                        src: '{,*/}*.coffee',
+                        dest: '.tmp/scripts',
+                        ext: '.js'
+                    }
+                ]
             },
             test: {
-                files: [{
-                    expand: true,
-                    cwd: 'test/spec',
-                    src: '{,*/}*.coffee',
-                    dest: '.tmp/spec',
-                    ext: '.js'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'test/spec',
+                        src: '{,*/}*.coffee',
+                        dest: '.tmp/spec',
+                        ext: '.js'
+                    }
+                ]
             }
         },
         compass: {
@@ -190,8 +195,8 @@ module.exports = function (grunt) {
         // check index.html to edit your build targets
         // enable this task if you prefer defining your build targets here
         /*uglify: {
-            dist: {}
-        },*/
+         dist: {}
+         },*/
         useminPrepare: {
             html: '<%= yeoman.app %>/index.html',
             options: {
@@ -207,12 +212,14 @@ module.exports = function (grunt) {
         },
         imagemin: {
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/images',
-                    src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/images',
+                        src: '{,*/}*.{png,jpg,jpeg}',
+                        dest: '<%= yeoman.dist %>/images'
+                    }
+                ]
             }
         },
         cssmin: {
@@ -229,38 +236,60 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     /*removeCommentsFromCDATA: true,
-                    // https://github.com/yeoman/grunt-usemin/issues/44
-                    //collapseWhitespace: true,
-                    collapseBooleanAttributes: true,
-                    removeAttributeQuotes: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true,
-                    removeEmptyAttributes: true,
-                    removeOptionalTags: true*/
+                     // https://github.com/yeoman/grunt-usemin/issues/44
+                     //collapseWhitespace: true,
+                     collapseBooleanAttributes: true,
+                     removeAttributeQuotes: true,
+                     removeRedundantAttributes: true,
+                     useShortDoctype: true,
+                     removeEmptyAttributes: true,
+                     removeOptionalTags: true*/
                 },
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>',
-                    src: '*.html',
-                    dest: '<%= yeoman.dist %>'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>',
+                        src: '*.html',
+                        dest: '<%= yeoman.dist %>'
+                    }
+                ]
             }
         },
         copy: {
             dist: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= yeoman.app %>',
-                    dest: '<%= yeoman.dist %>',
-                    src: [
-                        '*.{ico,txt}',
-                        '.htaccess',
-                        'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/{,*/}*.*',
-                        'bower_components/sass-bootstrap/fonts/*.*'
-                    ]
-                }]
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.app %>',
+                        dest: '<%= yeoman.dist %>',
+                        src: [
+                            '*.{ico,txt}',
+                            '.htaccess',
+                            'images/{,*/}*.{webp,gif}',
+                            'styles/fonts/{,*/}*.*',
+                            'bower_components/sass-bootstrap/fonts/*.*'
+                        ]
+                    }
+                ]
+            },
+            grails_dist: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '.tmp/concat/scripts',
+                        dest: '<%= yeoman.grails_dist %>/js',
+                        src: ['**/*.js']
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '.tmp/concat/styles',
+                        dest: '<%= yeoman.grails_dist %>/css',
+                        src: ['*.css']
+                    }
+                ]
             }
         },
         handlebars: {
@@ -290,11 +319,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('createDefaultTemplate', function () {
         grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
-    });
-
-    grunt.registerTask('server', function () {
-        grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-        grunt.task.run(['serve:' + target]);
     });
 
     grunt.registerTask('serve', function (target) {
@@ -330,16 +354,16 @@ module.exports = function (grunt) {
     grunt.registerTask('test', function (isConnected) {
         isConnected = Boolean(isConnected);
         var testTasks = [
-                'clean:server',
-                'coffee',
-                'createDefaultTemplate',
-                'handlebars',
-                'compass',
-                'jasmine',
-                'watch:test'
-            ];
-            
-        if(!isConnected) {
+            'clean:server',
+            'coffee',
+            'createDefaultTemplate',
+            'handlebars',
+            'compass',
+            'jasmine',
+            'watch:test'
+        ];
+
+        if (!isConnected) {
             return grunt.task.run(testTasks);
         } else {
             // already connected so not going to connect again, remove the connect:test task
