@@ -8,5 +8,8 @@
 
 <body>
     <h1>Welcome!</h1>
+    <div class="well">
+        <p>SIP address: <span id="sipAddress"></span></p>
+    </div>
 </body>
 </html>

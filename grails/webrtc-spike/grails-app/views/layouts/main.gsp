@@ -14,15 +14,16 @@
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
-    <g:layoutHead/>
     <g:javascript src="vendor/modernizr.js"/>
     <g:javascript src="vendor.js"/>
     <g:javascript src="plugins.js"/>
     <g:javascript src="application.js"/>
+    <g:layoutHead/>
     <r:layoutResources/>
 </head>
 
 <body>
+
 <div class="container">
     <div class="header">
         <ul class="nav nav-pills pull-right">
@@ -40,8 +41,8 @@
     <div class="footer" role="contentinfo">
         <p>Pintail Consulting LLC - 2014</p>
     </div>
-
 </div>
+
 <r:layoutResources/>
 </body>
 </html>

@@ -6,7 +6,27 @@
     Routers: {},
     init: function() {
       'use strict';
-      return console.log('Hello from Backbone!');
+      return $.phono({
+        apiKey: 'bbd8b811336386776eeba091b89088ea',
+        onReady: function(event) {
+          return $('span#sipAddress').html("sip:" + this.sessionId);
+        },
+        phone: {
+          onIncomingCall: function(event) {
+            var call;
+            call = event.call;
+            _.each(call.headers, function(header) {
+              return console.log("Customer header: [" + header.name + ": " + header.value + "]");
+            });
+            alert("Incoming call...");
+            return call.bind({
+              onHangup: function(event) {
+                return console.log('Call hung up');
+              }
+            });
+          }
+        }
+      });
     }
   };
 
